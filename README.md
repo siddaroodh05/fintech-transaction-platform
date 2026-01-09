@@ -1,1 +1,1 @@
-# Financial Transaction Monitoring /& Analytics Platform
+# Financial Transaction Monitoring & Analytics Platform
