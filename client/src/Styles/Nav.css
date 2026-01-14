@@ -1,0 +1,69 @@
+.home-navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 38px;
+    border-bottom: 1px solid #1e293b;
+  }
+  
+  .nav-left {
+    display: flex;
+    align-items: center;
+  }
+  
+  .nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+  
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+  }
+  
+  .nav-link {
+    display: flex;
+    align-items: center;  
+    gap: 6px;              
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: rgb(237, 237, 237);
+    cursor: pointer;
+    transition: color 0.2s ease;
+  }
+  
+  
+  .nav-link:hover {
+    color: #818cf8;
+  }
+
+  .btn-outline {
+    background: transparent;
+    border: 1px solid #475569;
+    padding: 10px 20px;
+    border-radius: 16px;
+    color: rgb(237, 237, 237);;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  
+  .btn-outline:hover {
+    background: #1e293b;
+    color: white;
+  }
+
+.brand-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+  }
+
+.brand-name {
+    font-size: 1.25rem;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    color: rgb(237, 237, 237);;
+  }
