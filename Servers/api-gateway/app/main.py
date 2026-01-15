@@ -1,27 +1,14 @@
 from fastapi import FastAPI
-from fastapi.middleware.cors import CORSMiddleware
+from app.routes import auth_routes
+from app.middlewares.jwt_middleware import JWTMiddleware
 
-app = FastAPI()
+app = FastAPI(title="API Gateway")
 
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["http://localhost:5173"],
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
+app.add_middleware(JWTMiddleware)
+
+
+app.include_router(auth_routes.router, prefix="/auth")  
 
 @app.get("/")
-def read_root():
-    return {"message": "Hello, FastAPI!"}
-
-items_db = [
-    {"name": "Laptop", "price": 50000},
-    {"name": "Mobile", "price": 20000},
-    {"name": "Headphones", "price": 3000}
-]
-
-
-@app.get("/items")
-def read_item():
-    return { "item": items_db}
+def root():
+    return {"message": "API Gateway Running"}
