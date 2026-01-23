@@ -1,20 +1,20 @@
-fastapi==0.128.0
-uvicorn==0.40.0
+fastapi
+uvicorn
 
 # Database
-SQLAlchemy==2.0.45
-psycopg2-binary==2.9.11
+SQLAlchemy
+psycopg2-binary
 
 # Auth & Security
-python-jose==3.5.0
-passlib==1.7.4
-bcrypt==3.2.0
-cryptography==46.0.3
+python-jose
+passlib
+bcrypt
+cryptography
 
 # Validation
-pydantic==2.12.5
-email-validator==2.3.0
+pydantic
+email-validator
 
 # Utilities
-python-dotenv==1.2.1
-nanoid==2.0.0
+python-dotenv
+nanoid

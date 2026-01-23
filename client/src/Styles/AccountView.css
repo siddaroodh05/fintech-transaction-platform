@@ -1,0 +1,98 @@
+.account-page {
+    min-height: 100vh;
+    width: 100%;
+    background-color: var(--bg-color);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .nav-wrapper {
+    width: 100%;
+  }
+  
+  
+
+  .account-card {
+    background-color: var(--card-bg);
+    width: 100%;
+    max-width: 520px;
+    padding: 32px;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+    margin-top: 40px;   
+  }
+  
+  
+  
+  .profile-section {
+    text-align: center;
+  }
+  
+  .profile-icon {
+    width: 110px;
+    height: 110px;
+    background-color: var(--primary-color);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+    color: #000;
+  }
+  
+  .user-name {
+    margin-top: 16px;
+    font-size: 22px;
+    font-weight: 600;
+    color: white;
+  }
+  
+  
+  .details-section {
+    margin-top: 28px;
+  }
+  
+  .detail-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #d1d5db;
+    font-size: 14px;
+    margin-bottom: 14px;
+  }
+  
+  .detail-row strong {
+    color: #9ca3af;
+  }
+  
+  
+  .action-section {
+    margin-top: 36px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  
+  .btn {
+    padding: 14px;
+    border-radius: 14px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+  }
+  
+  .btn.primary {
+    background-color: var(--primary-color);
+    color: #000;
+    border: none;
+  }
+  
+  .btn.secondary {
+    background: transparent;
+    color: var(--secondary-color);
+    border: 1px solid var(--secondary-color);
+  }
+  
+  .btn:hover {
+    opacity: 0.9;
+  }

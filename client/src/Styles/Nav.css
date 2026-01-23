@@ -38,6 +38,11 @@
   .nav-link:hover {
     color: #818cf8;
   }
+  .nav-link.active {
+    color: #818cf8;
+   
+  }
+  
 
   .btn-outline {
     background: transparent;
@@ -67,3 +72,83 @@
     letter-spacing: -0.5px;
     color: rgb(237, 237, 237);;
   }
+
+
+  /* ---------------- User Profile ---------------- */
+
+  .user-profile-wrapper {
+    position: relative;
+    margin-left: 16px;
+  }
+  
+  .profile-circle {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: #1e293b;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border: 1px solid #334155;
+  }
+  
+  .profile-circle:hover {
+    background: #334155;
+  }
+  
+  .profile-dropdown {
+    position: absolute;
+    top: 45px;
+    right: 0;
+    width: 220px;
+    background: #020617;
+    border: 1px solid #1e293b;
+    border-radius: 14px;
+    padding: 12px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+    z-index: 100;
+  }
+  
+  .dropdown-header {
+    margin-bottom: 10px;
+  }
+  
+  .user-name-text {
+    font-weight: 700;
+    font-size: 0.9rem;
+  }
+  
+  .user-email-text {
+    font-size: 0.75rem;
+    color: #94a3b8;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  
+  .dropdown-divider {
+    height: 1px;
+    background: rgba(255, 255, 255, 0.08);
+    margin: 10px 0;
+  }
+  
+  .logout-button {
+    width: 100%;
+    background: #1e293b;
+    border: none;
+    border-radius: 10px;
+    padding: 8px;
+    color: #f87171;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    cursor: pointer;
+  }
+  
+  .logout-button:hover {
+    background: #7f1d1d;
+    color: white;
+  }
+  

@@ -1,36 +1,46 @@
 from fastapi import HTTPException, status
 from sqlalchemy.orm import Session
 from nanoid import generate
+
 from app.models.user import User
-from app.schemas.user_schema import UserRegister
+from app.schemas.user_schema import RegisterResponse, UserRegister
 from app.utils.password_hasher import hash_password, verify_password
 from app.utils.jwt_handler import create_access_token
+from app.utils.generate_account_number import generate_account_number
 
 
-def register_user(db: Session, user_data: UserRegister) -> User:
+def register_user(db: Session, user_data: UserRegister):
     existing_user = db.query(User).filter(User.email == user_data.email).first()
     if existing_user:
-        raise HTTPException(
-            status_code=status.HTTP_409_CONFLICT,
-            detail="Email already registered"
-        )
+        raise HTTPException(status_code=409, detail="Email already registered")
 
-    hashed_pwd = hash_password(user_data.password)
+    if db.query(User).filter(User.username == user_data.username).first():
+        raise HTTPException(status_code=409, detail="Username already taken")
+
     user_id = generate(size=16)
+    hashed_pwd = hash_password(user_data.password)
 
     user = User(
         id=user_id,
         username=user_data.username,
         email=user_data.email,
         password_hash=hashed_pwd,
-        role="user"
+        role="user",
+        is_active=True
     )
 
     db.add(user)
     db.commit()
     db.refresh(user)
-    return user
 
+    account_number = generate_account_number()
+
+    return RegisterResponse(
+        id=user.id,
+        username=user.username,
+        email=user.email,
+        account_number=account_number
+    )
 
 
 def authenticate_user(db: Session, email: str, password: str) -> User:
@@ -39,34 +49,18 @@ def authenticate_user(db: Session, email: str, password: str) -> User:
     if not user or not verify_password(password, user.password_hash):
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Invalid email or password",
-            headers={"WWW-Authenticate": "Bearer"},
+            detail="Invalid email or password"
         )
-
     return user
-
 
 
 def login_user(db: Session, email: str, password: str) -> dict:
     user = authenticate_user(db, email, password)
 
-    token = create_access_token(
-        sub=user.id,
-        role=user.role
-    )
+    token = create_access_token(sub=user.id, role=user.role)
 
     return {
-        "access_token": token,
-        "token_type": "bearer"
+        "token": token,
+        "username": user.username,
+        "email": user.email
     }
-
-
-
-def get_user_by_id(db: Session, user_id: str) -> User:
-    user = db.query(User).filter(User.id == user_id).first()
-    if not user:
-        raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND,
-            detail="User not found"
-        )
-    return user

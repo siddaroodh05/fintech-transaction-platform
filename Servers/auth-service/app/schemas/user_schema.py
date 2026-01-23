@@ -41,3 +41,23 @@ class TokenPayload(BaseModel):
 
 class MessageResponse(BaseModel):
     detail: str
+    
+class RegisterResponse(BaseModel):
+    id: str
+    username: str
+    email: EmailStr
+    account_number: str
+
+
+# -----------------------------
+# User info returned on login
+# -----------------------------
+class UserInfo(BaseModel):
+    username: str
+    email: EmailStr
+
+class LoginResponse(BaseModel):
+    message: str
+    username: str
+    email: EmailStr
+
