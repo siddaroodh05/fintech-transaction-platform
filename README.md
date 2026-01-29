@@ -2,25 +2,6 @@
 
 A full-stack fintech application that simulates core banking functionality — user authentication, account creation, balance checks, and fund transfers — built with a modular microservices architecture for clarity and extensibility.
 
-## Table of contents
-
-- [Project Overview](#project-overview)
-- [Architecture](#architecture)
-  - [Auth Service](#auth-service)
-  - [Transaction Service](#transaction-service)
-  - [API Gateway](#api-gateway)
-  - [Frontend (React)](#frontend-react)
-- [Current Features Implemented](#current-features-implemented)
-- [Database Schema (high level)](#database-schema-high-level)
-- [Security & State Management](#security--state-management)
-- [Technologies](#technologies)
-- [Getting Started](#getting-started)
-  - [Prerequisites](#prerequisites)
-  - [Environment variables (examples)](#environment-variables-examples)
-  - [Running the services locally](#running-the-services-locally)
-- [Future Plans](#future-plans)
-- [Contributing](#contributing)
-- [License](#license)
 
 ## Project overview
 
