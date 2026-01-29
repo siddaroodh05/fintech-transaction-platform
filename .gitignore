@@ -32,8 +32,6 @@ package-lock.json
 yarn.lock
 
 # Client-side local files
-client/src/store/
-client/src/api/
 client/src/*.log
 
 # IDEs / Editors
