@@ -82,9 +82,9 @@
   }
   
   .btn.primary {
-    background-color: var(--primary-color);
-    color: #000;
-    border: none;
+    background: transparent;
+    color: var(--secondary-color);
+    border: 1px solid var(--secondary-color);
   }
   
   .btn.secondary {

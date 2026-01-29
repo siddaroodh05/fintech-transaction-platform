@@ -1,20 +1,40 @@
+# Core Web Framework
 fastapi
+starlette
 uvicorn
 
-# Database
-SQLAlchemy
-psycopg2-binary
+# HTTP Client & Networking
+httpx
+httpcore
+requests
+urllib3
+h11
+anyio
+idna
+dnspython
+certifi
+charset-normalizer
 
-# Auth & Security
+# Authentication & Security
 python-jose
-passlib
-bcrypt
-cryptography
+PyJWT
+rsa
+ecdsa
+pyasn1
 
-# Validation
+# Validation & Typing
 pydantic
+pydantic_core
+annotated-types
+annotated-doc
 email-validator
+typing_extensions
+typing-inspection
+
+# Configuration
+python-dotenv
 
 # Utilities
-python-dotenv
-nanoid
+click
+colorama
+six

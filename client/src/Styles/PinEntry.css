@@ -1,0 +1,123 @@
+.pin-page {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: var(--bg-color);
+}
+
+.pin-message{
+  font-weight: 400;
+  font-size: 14px;
+  color :#ef4444
+}
+.pin-card {
+  width: 90%;
+  max-width: 380px;
+  background: var(--card-bg);
+  padding: 40px;
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow);
+  text-align: center;
+  animation: slideUp 0.4s ease-out;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+
+.pin-title {
+  color: var(--text-color);
+  font-size: 1.4rem;
+  margin-bottom: 8px;
+}
+
+.pin-subtitle {
+  color: var(--muted-text);
+  font-size: 0.9rem;
+  margin-bottom: 24px;
+}
+
+
+.pin-input-group {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 28px;
+}
+
+
+.pin-input {
+  width: 60px;
+  height: 60px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 14px;
+  color: var(--text-color);
+  font-size: 1.5rem;
+  text-align: center;
+  outline: none;
+  transition: border 0.2s ease, transform 0.2s ease;
+}
+
+.pin-input:focus {
+  border-color: var(--primary-color);
+  transform: scale(1.05);
+}
+
+.pin-input::-webkit-inner-spin-button,
+.pin-input::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+
+
+.btn-primary {
+  width: 100%;
+  padding: 14px;
+  background: var(--primary-color);
+  color: #fff;
+  border: none;
+  border-radius: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.btn-primary:hover {
+  background: #2563eb;
+  transform: translateY(-2px);
+}
+
+
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+.btn-primary:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.btn-loader {
+  width: 20px;
+  height: 20px;
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  border-top: 3px solid #ffffff;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

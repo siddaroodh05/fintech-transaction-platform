@@ -30,9 +30,15 @@ async def signup(user_data: dict, response: Response):
             return auth_response.json()
 
         except httpx.HTTPStatusError as e:
+            try:
+                detail = e.response.json()
+                if isinstance(detail, dict) and "detail" in detail:
+                    detail = detail["detail"] 
+            except Exception:
+                detail = e.response.text
             raise HTTPException(
                 status_code=e.response.status_code,
-                detail=e.response.json()
+                detail=detail
             )
 
         except httpx.RequestError:
@@ -66,9 +72,15 @@ async def login(user_data: dict, response: Response):
             return auth_response.json()
 
         except httpx.HTTPStatusError as e:
+            try:
+                detail = e.response.json()
+                if isinstance(detail, dict) and "detail" in detail:
+                    detail = detail["detail"]  # unwrap nested detail
+            except Exception:
+                detail = e.response.text
             raise HTTPException(
                 status_code=e.response.status_code,
-                detail=e.response.json()
+                detail=detail
             )
 
         except httpx.RequestError:
@@ -95,9 +107,15 @@ async def get_current_user(request: Request):
             return auth_response.json()
 
         except httpx.HTTPStatusError as e:
+            try:
+                detail = e.response.json()
+                if isinstance(detail, dict) and "detail" in detail:
+                    detail = detail["detail"]  # unwrap nested detail
+            except Exception:
+                detail = e.response.text
             raise HTTPException(
                 status_code=e.response.status_code,
-                detail=e.response.json()
+                detail=detail
             )
 
         except httpx.RequestError:

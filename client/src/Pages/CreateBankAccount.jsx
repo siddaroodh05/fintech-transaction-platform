@@ -42,7 +42,8 @@ const CreateBankAccount = () => {
           name: userData.username,
           accountNumber: userData.accountNumber,
           email: userData.email
-        }
+        },
+        replace :true
       });
     } catch (err) {
       const msg =

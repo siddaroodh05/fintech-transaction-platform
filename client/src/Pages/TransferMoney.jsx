@@ -1,54 +1,98 @@
 import { useState } from "react";
+import { CheckCircle, XCircle, Loader2, CreditCard, User } from "lucide-react";
 import "../Styles/TransferMoney.css";
-import { CreditCard, User, Lock} from "lucide-react";
-import Nav from "../components/Nav";
-
+import { VERIFYRECIVERACCOUNT } from "../api/transiction";
+import { useNavigate } from "react-router-dom";
+import { useAuthStore } from "../store/useAuthStore";
+import { useAccountStore } from "../store/useAccountStore";
 export default function TransferMoney() {
   const [accountNumber, setAccountNumber] = useState("");
   const [holderName, setHolderName] = useState("");
-  const [amount, setAmount] = useState(""); 
-  const [pin, setPin] = useState("");
+  const [amount, setAmount] = useState("");
+  const navigate = useNavigate();
+ 
+  const [isVerifying, setIsVerifying] = useState(false);
+  const [isVerified, setIsVerified] = useState(false);
+  const [verifyError, setVerifyError] = useState("");
+  const { isAuthenticated } = useAuthStore();
+  const {account} =useAccountStore();
 
-  const handleAccountChange = (e) => {
-    const value = e.target.value.replace(/\D/g, "").slice(0, 12);
+  const [hasVerified, setHasVerified] = useState(false);
+
+  const handleAccountChange = async (e) => {
+    let value = e.target.value.replace(/\D/g, "");
+    if (value.length > 12) value = value.slice(0, 12);
+  
+    if (value === accountNumber) return;
+  
     setAccountNumber(value);
-    if (value.length === 12) setHolderName("Amit Kumar");
-    else setHolderName("");
-  };
+  
+   
+    setHolderName("");
+    setIsVerified(false);
+    setVerifyError("");
+    setIsVerifying(false);
+    setHasVerified(false);
+  
+    if (value.length === 12 && isAuthenticated) {
+      try {
+        setIsVerifying(true);
+        const holder = await VERIFYRECIVERACCOUNT(value);
+  
+       
+          setHolderName(holder.holder_name);
+          setIsVerified(true);
+          setHasVerified(true);
+      
+      } catch (err) {
+      
+          setVerifyError("Account not found");
+          setIsVerified(false);
+          setHasVerified(true);
 
+      } finally {
+       setIsVerifying(false);
+      }
+    }
+  };
   const handleAmountChange = (e) => {
     const value = e.target.value;
-  
     if (/^\d*$/.test(value)) {
       setAmount(value);
     }
   };
 
   const handleTransfer = () => {
-  
     const transferAmount = parseFloat(amount);
-    alert(`Transferred ₹${transferAmount.toLocaleString()} to ${holderName}`);
-    
-    // Reset form
+    navigate("/verify-pin", {
+      state: {
+        action: "TRANSFER",amount: transferAmount,from_account:account?.account_number,to_account: accountNumber}});
+  
+
     setAccountNumber("");
     setHolderName("");
     setAmount("");
-    setPin("");
+    setIsVerified(false);
   };
 
-  const canPay = accountNumber.length === 12 && holderName && amount.length > 0 && pin.length >= 4;
+  const canPay =
+    accountNumber.length === 12 &&
+    isVerified &&
+    amount.length > 0;
 
   return (
     <div className="transfer-container">
       <div className="nav-wrapper">
-        <Nav />
       </div>
 
       <div className="transfer-card">
         <h2>Transfer Money</h2>
 
-      
-        <div className="input-box">
+        {verifyError && (
+          <div className="verify-error-banner">{verifyError}</div>
+        )}
+
+        <div className="input-box verify-input">
           <input
             id="acc-input"
             type="text"
@@ -57,16 +101,28 @@ export default function TransferMoney() {
             value={accountNumber}
             onChange={handleAccountChange}
           />
+
           <label htmlFor="acc-input">
             <CreditCard size={18} /> Account Number
           </label>
+
+          <div className="verify-icon">
+            {isVerifying && <Loader2 size={20} className="spin" />}
+            {isVerified && <CheckCircle size={20} className="verified" />}
+            {verifyError && <XCircle size={20} className="error" />}
+          </div>
         </div>
 
-       
         {holderName && (
           <>
             <div className="input-box">
-              <input id="holder-input" type="text" value={holderName} readOnly placeholder=" " />
+              <input
+                id="holder-input"
+                type="text"
+                value={holderName}
+                readOnly
+                placeholder=" "
+              />
               <label htmlFor="holder-input">
                 <User size={18} /> Account Holder
               </label>
@@ -81,41 +137,21 @@ export default function TransferMoney() {
                 value={amount}
                 onChange={handleAmountChange}
               />
-              <label htmlFor="amount-input">
-                <span className="currency-symbol">₹</span> Amount
-              </label>
-            </div>
-            <div className="input-box">
-              <input
-                id="amount-input"
-                type="text"
-                inputMode="numeric"
-                placeholder=" "
-               
-              />
-              <label htmlFor="amount-input">
-                Description[optional]
-              </label>
+              <label htmlFor="amount-input">₹ Amount</label>
             </div>
 
             <div className="input-box">
-              <input
-                id="pin-input"
-                type="password"
-                inputMode="numeric"
-                maxLength={6}
-                placeholder=" "
-                value={pin}
-                onChange={(e) => setPin(e.target.value.replace(/\D/g, ""))}
-              />
-              <label htmlFor="pin-input">
-                <Lock size={18} /> PIN
-              </label>
+              <input type="text" placeholder=" " />
+              <label>Description (optional)</label>
             </div>
           </>
         )}
 
-        <button className="pay-button" onClick={handleTransfer} disabled={!canPay}>
+        <button
+          className="pay-button"
+          onClick={handleTransfer}
+          disabled={!canPay}
+        >
           Pay Now
         </button>
       </div>

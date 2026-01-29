@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState ,useEffect} from "react";
 import {
   Mail,
   Lock,
@@ -11,6 +11,8 @@ import {
 import "../styles/Login.css";
 import { loginUser, registerUser } from "../api/auth";
 import { useNavigate } from "react-router-dom";
+import { useAuthStore } from "../store/useAuthStore";
+
 
 const Auth = () => {
   const [isLogin, setIsLogin] = useState(true);
@@ -22,53 +24,68 @@ const Auth = () => {
   const [password, setPassword] = useState("");
 
   const navigate = useNavigate();
+  const login = useAuthStore((state) => state.login);
+  const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate("/", { replace: true });
+    }
+  }, [isAuthenticated, navigate]);
+  
+
 
   const handleSubmit = async () => {
     setError("");
     setIsLoading(true);
-
+  
     try {
       if (isLogin) {
         const response = await loginUser(email, password);
-
-        localStorage.setItem("isAuthenticated", "true");
-        localStorage.setItem("username", response.username);
-        localStorage.setItem("email", response.email);
-
-        navigate("/");
+  
+        login({
+          name: response.username,
+          email: response.email
+        });
+  
+        navigate("/", { replace: true });
+  
       } else {
         const response = await registerUser(name, email, password);
-
-        localStorage.setItem("isAuthenticated", "true");
-        localStorage.setItem("username", response.username);
-        localStorage.setItem("email", response.email);
-
+  
+        login({
+          name: response.username,
+          email: response.email
+        });
+  
         navigate("/create-bank-account", {
           state: {
             username: response.username,
             email: response.email,
             accountNumber: response.account_number
-          }
+          },
+          replace: true
         });
       }
     } catch (err) {
       let message = "Authentication failed";
-
+  
       if (err?.response?.data) {
-        if (typeof err.response.data === "string") {
-          message = err.response.data;
-        } else if (typeof err.response.data.detail === "string") {
-          message = err.response.data.detail;
-        }
+        message =
+          typeof err.response.data === "string"
+            ? err.response.data
+            : err.response.data.detail || message;
       } else if (err?.message) {
         message = err.message;
       }
-
+  
       setError(message);
     } finally {
       setIsLoading(false);
     }
   };
+  
+
 
   return (
     <div className="home-container login-page">

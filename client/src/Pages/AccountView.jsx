@@ -1,15 +1,14 @@
 import { User, Mail, CreditCard } from "lucide-react";
 import "../Styles/AccountView.css";
-import Nav from "../components/Nav";
-import { useUserStore } from "../store/useUserStore";
+import { useAccountStore } from "../store/useAccountStore";
 
 export default function AccountView() {
-  const { user, setUser, balance } = useUserStore();
+  const { account } = useAccountStore();
+
 
   return (
     <div className="account-page">
       <div className="nav-wrapper">
-        <Nav />
       </div>
 
       <div className="account-card">
@@ -17,7 +16,7 @@ export default function AccountView() {
           <div className="profile-icon">
             <User size={40} />
           </div>
-          <h2 className="user-name">{user?.holder_name || "Loading..."}</h2>
+          <h2 className="user-name">{account?.holder_name || "Loading..."}</h2>
         </div>
 
         <div className="details-section">
@@ -25,14 +24,14 @@ export default function AccountView() {
             <CreditCard size={18} />
             <span>
               <strong>Account No:</strong>{" "}
-              {user?.account_number || "-----------"}
+              {account?.account_number || "-----------"}
             </span>
           </div>
 
           <div className="detail-row">
             <Mail size={18} />
             <span>
-              <strong>Email:</strong> {user?.email || "-----------"}
+              <strong>Email:</strong> {account?.email || "-----------"}
             </span>
           </div>
         </div>
@@ -40,8 +39,7 @@ export default function AccountView() {
         <div className="action-section">
           <button className="btn primary">Manage PIN</button>
 
-          <button className="btn secondary">
-            {balance !== null ? `Balance: ₹${balance}` : "Check Balance"}
+          <button className="btn secondary">Check Balance
           </button>
         </div>
       </div>

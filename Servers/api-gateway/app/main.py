@@ -3,6 +3,8 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from app.routes.auth_routes import router as auth_router
 from app.routes.account_routes import router as account_router
+from app.routes import transactions as transaction_routes
+
 from app.middlewares.jwt_middleware import JWTMiddleware
 
 app = FastAPI(title="API Gateway")
@@ -22,6 +24,8 @@ app.add_middleware(JWTMiddleware)
 
 app.include_router(auth_router, prefix="/auth")
 app.include_router(account_router, prefix="/accounts")
+app.include_router(transaction_routes.router,prefix="/transactions")
+
 
 @app.get("/health")
 def health():

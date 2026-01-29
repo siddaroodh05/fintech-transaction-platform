@@ -1,4 +1,4 @@
-import { useLocation, useNavigate } from "react-router-dom";
+import {  useLocation, useNavigate } from "react-router-dom";
 import { CheckCircle2, ArrowRight } from "lucide-react";
 import "../Styles/Success.css"; 
 
@@ -34,7 +34,8 @@ import "../Styles/Success.css";
           </div>
         </div>
 
-        <button className="btn-primary login-btn" onClick={() => navigate("/")}>
+        <button className="btn-primary login-btn" onClick={() => navigate("/", { replace: true })}
+>
           Go to Dashboard <ArrowRight size={18} />
         </button>
       </div>

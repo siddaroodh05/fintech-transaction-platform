@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.routes import account_routes
+from app.routes import transaction_routes
 from app.db import Base, engine
 
 app = FastAPI(
@@ -22,6 +23,7 @@ def startup_event():
     Base.metadata.create_all(bind=engine)
 
 app.include_router(account_routes.router, prefix="/accounts")
+app.include_router(transaction_routes.router, prefix="/transactions")
 
 @app.get("/", summary="Service health check")
 def root():
