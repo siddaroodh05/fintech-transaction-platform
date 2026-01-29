@@ -108,7 +108,3 @@ The system follows a microservices architecture with a single API Gateway for ro
 - Enhance API Gateway: add logging, rate-limiting, authentication enforcement, monitoring, and observability
 - Improve security hardening: rotate secrets, use OAuth2/JWT options for certain flows, strong PIN handling
 
-
-
-## License
-This repository's license information goes here — add a LICENSE file and reference it.
